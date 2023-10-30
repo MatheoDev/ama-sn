@@ -1,6 +1,6 @@
-import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from './store'
-import { User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth } from '../conf/firebase'
 
 
@@ -57,6 +57,6 @@ export const favoriteSlice = createSlice({
 
 export const { } = favoriteSlice.actions;
 
-export const selectList = (state: RootState) => state.user.current
+export const selectUserConnected = (state: RootState) => state.user.current
 
 export default favoriteSlice.reducer
