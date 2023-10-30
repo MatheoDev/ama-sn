@@ -1,3 +1,4 @@
+import React from 'react';
 import { Provider } from 'react-redux'
 import { store } from './src/helpers/store'
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
@@ -11,6 +12,7 @@ const user = {
 
 const WrapperApp = () => {
   const dispatch = useAppDispatch()
+
 
   return (
     <SafeAreaView style={styles.container}>
