@@ -2,6 +2,7 @@ import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from './store'
 import { User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth } from '../conf/firebase'
+import { UserType } from './types/index'
 
 
 export interface UserState {
