@@ -1,13 +1,12 @@
-import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from './store'
-import { User, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { PublicationType } from './types/index'
-import { collection, doc, getDocs } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore'
 import db from '../conf/firebase'
 
 
 export interface PublicationState {
-  current: PublicationType | null
+    list: PublicationType[]
 }
 
 export const fetchPublication = createAsyncThunk(
@@ -23,26 +22,26 @@ export const fetchPublication = createAsyncThunk(
 )
 
 const initialState: PublicationState = {
-  current: null
+    list: []
 }
 
-export const favoriteSlice = createSlice({
+export const publicationSlice = createSlice({
   name: 'publication',
-    initialState: {
-        publicationArray:[],
-    },
+  initialState,
   reducers: {
   },
     extraReducers: (builder) => {
         builder
         .addCase(fetchPublication.fulfilled, (state, action) => { 
-            state.publicationArray = action.payload;
+            const publications = action.payload
+            console.log(publications)
+            state.list = publications
         })
     }
 });
 
-export const { } = favoriteSlice.actions;
+export const { } = publicationSlice.actions;
 
-export const selectList = (state: RootState) => state.user.current
+export const selectList = (state: RootState) => state.publication.list
 
-export default favoriteSlice.reducer
+export default publicationSlice.reducer

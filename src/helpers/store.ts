@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import userSlice from './userSlice'
+import publicationSlice from './publicationSlice'
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
+    publication: publicationSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
