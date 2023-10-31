@@ -1,5 +1,5 @@
 import { SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native"
-import { useAppDispatch } from "../helpers/hook"
+import { useAppDispatch, useAppSelector } from "../helpers/hook"
 import { createUser } from "../helpers/userSlice"
 import { UserType } from "../helpers/types"
 import { useState } from "react"
@@ -13,12 +13,33 @@ const Signup = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
+  const [errorEmail, setErrorEmail] = useState<boolean>(false)
+  const [errorPassword, setErrorPassword] = useState<boolean>(false)
+  const [errorPasswordConfirmation, setErrorPasswordConfirmation] = useState<boolean>(false)
+  const errorLogin = useAppSelector(state => state.user.error)
+
+  const validEmail = (email: string): boolean => {
+    const regex = /\S+@\S+\.\S+/
+    return regex.test(email)
+  }
+
+  const validPassword = (password: string): boolean => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    return regex.test(password)
+  }
+
+  const getError = (): boolean => {
+    const isEmailInvalid = !email || !validEmail(email)
+    const isPasswordInvalid = !password || !validPassword(password)
+    const isPasswordConfirmationInvalid = !passwordConfirmation || passwordConfirmation !== password
+    setErrorEmail(isEmailInvalid)
+    setErrorPassword(isPasswordInvalid)
+    setErrorPasswordConfirmation(isPasswordConfirmationInvalid)
+    return isEmailInvalid || isPasswordInvalid || isPasswordConfirmationInvalid
+  }
 
   const register = () => {
-    const isSamePassword = password === passwordConfirmation
-    if (!isSamePassword) {
-      return
-    }
+    if (getError()) return
 
     const user = {
       email,
@@ -32,26 +53,36 @@ const Signup = () => {
     <Text className="text-4xl text-center pt-20">Ama</Text>
       <View className="flex gap-4 p-5 pt-10">
         <Text className="text-3xl font-bold">S'inscrire</Text>
-        <TextInput
-          placeholder="Email"
-          className="border border-gray-300 px-4 py-2 rounded-md"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          placeholder="Mot de passe"
-          className="border border-gray-300 px-4 py-2 rounded-md"
-          secureTextEntry={true}
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TextInput
-          placeholder="Confirmation du mot de passe"
-          className="border border-gray-300 px-4 py-2 rounded-md"
-          secureTextEntry={true}
-          value={passwordConfirmation}
-          onChangeText={setPasswordConfirmation}
-        />
+        {errorLogin && <Text className="text-red-500 pl-1">Le compte n'a pas pu être créé</Text>}
+        <View className="flex flex-col gap-1">
+          <TextInput
+            placeholder="Email"
+            className="border border-gray-300 px-4 py-2 rounded-md"
+            value={email}
+            onChangeText={setEmail}
+          />
+          {errorEmail && <Text className="text-red-500 pl-1">Email invalide</Text>}
+        </View>
+        <View className="flex flex-col gap-1">
+          <TextInput
+            placeholder="Mot de passe"
+            className="border border-gray-300 px-4 py-2 rounded-md"
+            secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
+          />
+          {errorPassword && <Text className="text-red-500 pl-1">Mot de passe invalide</Text>}
+        </View>
+        <View className="flex flex-col gap-1">
+          <TextInput
+            placeholder="Confirmation du mot de passe"
+            className="border border-gray-300 px-4 py-2 rounded-md"
+            secureTextEntry={true}
+            value={passwordConfirmation}
+            onChangeText={setPasswordConfirmation}
+          />
+          {errorPasswordConfirmation && <Text className="text-red-500 pl-1">Les mots de passe ne correspondent pas</Text>}
+        </View>
         <TouchableOpacity
           onPress={() => register()}
           className="bg-gray-500 px-4 py-2 rounded-md"
