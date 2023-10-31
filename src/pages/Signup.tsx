@@ -1,20 +1,69 @@
-import { SafeAreaView, Text, TouchableOpacity } from "react-native"
+import { SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useAppDispatch } from "../helpers/hook"
 import { createUser } from "../helpers/userSlice"
-
-const user = {
-  email: 'matheo.deknuydt@gmail.com',
-  password: 'Test1234@',
-} as UserType
+import { UserType } from "../helpers/types"
+import { useState } from "react"
+import { useNavigation } from "@react-navigation/native"
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"
+import { LogSignStackType } from "../router/types"
 
 const Signup = () => {
   const dispatch = useAppDispatch()
+  const navigation = useNavigation<NativeStackNavigationProp<LogSignStackType>>();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
+
+  const register = () => {
+    const isSamePassword = password === passwordConfirmation
+    if (!isSamePassword) {
+      return
+    }
+
+    const user = {
+      email,
+      password
+    } as UserType
+    dispatch(createUser(user))
+  }
 
   return (
-    <SafeAreaView>
-      <TouchableOpacity className='my-4' onPress={() => dispatch(createUser(user))}>
-        <Text>Sign up</Text>
-      </TouchableOpacity>
+    <SafeAreaView className="flex-1">
+      <View className="flex gap-4 p-5 pt-20">
+        <Text className="text-3xl font-bold">S'inscrire</Text>
+        <TextInput
+          placeholder="Email"
+          className="border border-gray-300 px-4 py-2 rounded-md"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          placeholder="Mot de passe"
+          className="border border-gray-300 px-4 py-2 rounded-md"
+          secureTextEntry={true}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TextInput
+          placeholder="Confirmation du mot de passe"
+          className="border border-gray-300 px-4 py-2 rounded-md"
+          secureTextEntry={true}
+          value={passwordConfirmation}
+          onChangeText={setPasswordConfirmation}
+        />
+        <TouchableOpacity
+          onPress={() => register()}
+          className="bg-gray-500 px-4 py-2 rounded-md"
+        >
+          <Text className="text-white text-center">S'inscrire</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          className="bg-white-500 px-4 py-2 rounded-md border border-gray-300"
+        >
+          <Text className="text-gray text-center">Se connecter</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   )
 }

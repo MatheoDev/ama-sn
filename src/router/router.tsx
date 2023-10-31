@@ -24,8 +24,16 @@ const HomeStackScreen = () => {
 const LogSignStackScreen = () => {
   return (
     <LogSignStack.Navigator>
-      <LogSignStack.Screen name="Login" component={Login} />
-      <LogSignStack.Screen name="Signup" component={Signup} />
+      <LogSignStack.Screen 
+        name="Login" 
+        component={Login} 
+        options={{ headerShown: false }}
+      />
+      <LogSignStack.Screen 
+        name="Signup" 
+        component={Signup} 
+        options={{ headerShown: false }}
+      />
     </LogSignStack.Navigator>
   )
 }
