@@ -13,11 +13,11 @@ export const fetchPublication = createAsyncThunk(
     'publication/fetchPublication',
     async () => {
         const querySnapshot = await getDocs(collection(db, "Publication"));
-        const publication = querySnapshot.docs.map((doc) => ({
+        const publications = querySnapshot.docs.map((doc) => ({
             id: doc.id,
             publication: doc.data(),   
         }));
-        return publication;
+        return publications;
     }
 )
 

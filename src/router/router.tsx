@@ -33,8 +33,6 @@ const LogSignStackScreen = () => {
 const Router = () => {
   const currentUser = useAppSelector(selectUserConnected)
 
-  console.log(currentUser)
-
   return (
     <NavigationContainer>
       {
