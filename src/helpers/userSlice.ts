@@ -11,6 +11,8 @@ export interface UserState {
 export const createUser = createAsyncThunk(
   'user/createUser',
   async (user: UserType) => {
+    if (!user.email || !user.password) throw new Error('Email and password are required')
+
     const response = await createUserWithEmailAndPassword(auth, user.email, user.password)
     return response.user
   }
@@ -19,6 +21,8 @@ export const createUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (user: UserType) => {
+    if (!user.email || !user.password) throw new Error('Email and password are required')
+
     const response = await signInWithEmailAndPassword(auth, user.email, user.password)
     return response.user
   }
