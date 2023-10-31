@@ -7,13 +7,13 @@ import { fetchPublication } from "../helpers/publicationSlice"
 
 const Home = () => {
   const data = useSelector((state: any) => state.publication);
-  console.log(data);
+  // console.log(data);
 
   const dispatch = useAppDispatch()
-
+  
   useEffect(() => {
     dispatch(fetchPublication())
-  }, [data])
+  }, [])
 
   return (
     <SafeAreaView className="flex-1 items-center justify-center">

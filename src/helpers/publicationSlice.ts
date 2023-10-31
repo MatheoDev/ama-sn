@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from './store'
 import { PublicationType } from './types/index'
-import { collection, getDocs } from 'firebase/firestore'
-import db from '../conf/firebase'
+import { collection, getDocs, query } from 'firebase/firestore'
+import { db } from '../conf/firebase'
 
 
 export interface PublicationState {
@@ -14,9 +14,9 @@ export const fetchPublication = createAsyncThunk(
     async () => {
         const querySnapshot = await getDocs(collection(db, "Publication"));
         const publications = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            publication: doc.data(),   
+            ...doc.data()
         }));
+
         return publications;
     }
 )
@@ -33,8 +33,7 @@ export const publicationSlice = createSlice({
     extraReducers: (builder) => {
         builder
         .addCase(fetchPublication.fulfilled, (state, action) => { 
-            const publications = action.payload
-            console.log(publications)
+            const publications = action.payload as PublicationType[]
             state.list = publications
         })
     }
