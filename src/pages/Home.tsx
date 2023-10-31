@@ -21,10 +21,6 @@ const Home = () => {
         renderItem={PublicationItem}
         keyExtractor={item => item.id}
       />
-
-      {/* <TouchableOpacity className='my-4' onPress={() => dispatch(logoutUser())}>
-        <Text>Logout</Text>
-      </TouchableOpacity> */}
     </SafeAreaView>
   )
 }
