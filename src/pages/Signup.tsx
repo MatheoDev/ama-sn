@@ -29,7 +29,8 @@ const Signup = () => {
 
   return (
     <SafeAreaView className="flex-1">
-      <View className="flex gap-4 p-5 pt-20">
+    <Text className="text-4xl text-center pt-20">Ama</Text>
+      <View className="flex gap-4 p-5 pt-10">
         <Text className="text-3xl font-bold">S'inscrire</Text>
         <TextInput
           placeholder="Email"
