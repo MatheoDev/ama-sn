@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, TouchableOpacity, FlatList, View, StyleSheet } from "react-native"
+import { SafeAreaView, FlatList } from "react-native"
 import { useAppDispatch } from "../helpers/hook"
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
@@ -19,8 +19,8 @@ const Home = () => {
       <FlatList 
         data={data}
         renderItem={PublicationItem}
-        keyExtractor={item => item.id}
-      />
+        keyExtractor={(item, index) => item.id || String(index)}
+        />
     </SafeAreaView>
   )
 }

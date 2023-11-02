@@ -7,7 +7,7 @@ type UserType = {
 }
 
 type PublicationType = {
-  id: string,
+  id?: string,
   title: string,
   body: string,
   date: Timestamp,
