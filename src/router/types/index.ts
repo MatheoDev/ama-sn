@@ -1,3 +1,5 @@
+import { UserInfoType } from "../../helpers/types";
+
 export type TabType = {
   HomePage: undefined;
   FriendPage: undefined;
@@ -18,6 +20,7 @@ export type LogSignStackType = {
 
 export type ChatStackType = {
   Chat: undefined,
+  ChatConv: { id: string, users: UserInfoType[] },
 }
 
 export type FriendStackType = {

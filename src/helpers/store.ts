@@ -13,6 +13,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';import userSlice from './userSlice'
 import publicationSlice from './publicationSlice'
 import topicSlice from './topicSlice'
+import chatSlice from './chatSlice';
 
 const persistConfig = {
   key: 'root',
@@ -26,7 +27,8 @@ export const store = configureStore({
   reducer: {
     user: persistedReducer,
     publication: publicationSlice,
-    topic: topicSlice
+    topic: topicSlice,
+    chat: chatSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -46,7 +48,13 @@ export const store = configureStore({
         // Ignore these field paths in all actions
         ignoredActionPaths: ['meta.arg', 'payload.timestamp', 'payload.date'],
         // Ignore these paths in the state
-        ignoredPaths: ['user.current', 'publication.list', 'topic.list', 'topic.listPublication',  'publication.listForUser'],
+        ignoredPaths: [
+          'user.current',
+          'publication.list', 
+          'topic.list', 
+          'topic.listPublication',  
+          'publication.listForUser',
+        ],
       },
     }),
 
