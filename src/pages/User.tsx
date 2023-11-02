@@ -1,7 +1,7 @@
 import { useEffect } from "react"
-import { Text, View } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import { useAppDispatch, useAppSelector } from "../helpers/hook"
-import { fetchInfoUser, selectUserInfo } from "../helpers/userSlice"
+import { fetchInfoUser, logoutUser, selectUserInfo } from "../helpers/userSlice"
 import { UserInfoType } from "../helpers/types"
 
 const User = () => {
@@ -20,6 +20,12 @@ const User = () => {
           <Text className="text-xl py-4">{ info.description }</Text>
         </>
       }
+      <TouchableOpacity
+        onPress={() => dispatch(logoutUser())}
+        className="bg-red-500 rounded-md p-2"
+      >
+        <Text className="text-white text-center">Déconnexion</Text>
+      </TouchableOpacity>
     </View>
   )
 }

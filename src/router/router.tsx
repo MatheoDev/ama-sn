@@ -22,6 +22,7 @@ import CreatePublication from "../pages/CreatePublication"
 import Chat from "../pages/Chat"
 import UserIcon from "../components/Button/UserIcon"
 import User from "../pages/User"
+import TopicFeed from "../pages/TopicFeed"
 
 const Tab = createBottomTabNavigator<TabType>();
 const HomeStack = createNativeStackNavigator<HomeStackType>()
@@ -69,7 +70,8 @@ const LogSignStackScreen = () => {
 const FriendStackScreen = () => {
   return (
     <FriendStack.Navigator>
-      <FriendStack.Screen name="Friend" component={Friend} options={{ headerShown: false }} />
+      <FriendStack.Screen name="Friend" component={Friend} options={{ title: 'Groupes' }} />
+      <FriendStack.Screen name="TopicFeed" component={TopicFeed} options={{ title: 'Feed' }} />
     </FriendStack.Navigator>
   )
 }
@@ -77,7 +79,7 @@ const FriendStackScreen = () => {
 const NotificationStackScreen = () => {
   return (
     <NotificationStack.Navigator>
-      <NotificationStack.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
+      <NotificationStack.Screen name="Notification" component={Notification} options={{ title: 'Notification' }} />
     </NotificationStack.Navigator>
   )
 }
@@ -85,7 +87,7 @@ const NotificationStackScreen = () => {
 const CreatePublicationStackScreen = () => {
   return (
     <CreatePublicationStack.Navigator>
-      <CreatePublicationStack.Screen name="CreatePublication" component={CreatePublication} options={{ headerShown: false }} />
+      <CreatePublicationStack.Screen name="CreatePublication" component={CreatePublication} options={{ title: 'Publier' }} />
     </CreatePublicationStack.Navigator>
   )
 }
@@ -93,7 +95,7 @@ const CreatePublicationStackScreen = () => {
 const ChatStackScreen = () => {
   return (
     <ChatStack.Navigator>
-      <ChatStack.Screen name="Chat" component={Chat} options={{ headerShown: false }} />
+      <ChatStack.Screen name="Chat" component={Chat} options={{ title: 'Messagerie' }} />
     </ChatStack.Navigator>
   )
 }

@@ -22,6 +22,7 @@ export type ChatStackType = {
 
 export type FriendStackType = {
   Friend: undefined,
+  TopicFeed: { id: string },
 }
 
 export type CreatePublicationStackType = {
