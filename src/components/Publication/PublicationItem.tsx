@@ -8,7 +8,9 @@ type PublicationItemProps = {
 
 const PublicationItem = ({ item }: PublicationItemProps) => {
   const date = new Date(item.date.seconds * 1000);
-  const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours() < 10 ? '0'+date.getHours():date.getHours()}:${date.getMinutes() < 10 ? '0'+date.getMinutes():date.getMinutes()}`
+  // on veux afficher la date au format 01/01/2021 et l'heure au format 12:00
+  // const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
 
   return (
     <View className='w-11/12 bg-white my-3 rounded-md p-4 mx-auto'>
