@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, RefreshControl, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 import { useAppDispatch, useAppSelector } from "../helpers/hook"
 import { fetchInfoUser, logoutUser, selectUserConnected, selectUserInfo } from "../helpers/userSlice"
 import { PublicationType, UserInfoType } from "../helpers/types"
@@ -43,11 +43,17 @@ const User = () => {
           data={publications}
           renderItem={({ item }) => <PublicationItem item={item} />}
           keyExtractor={item => item.id as string}
+          refreshControl={
+            <RefreshControl
+              refreshing={false}
+              onRefresh={() => dispatch(fetchPublicationByUser(user?.uid as string))}
+            />
+          }
         />
       }
       <TouchableOpacity
         onPress={() => dispatch(logoutUser())}
-        className="bg-red-500 rounded-md p-2"
+        className="bg-red-500 rounded-md m-3 p-2"
       >
         <Text className="text-white text-center">Déconnexion</Text>
       </TouchableOpacity>
