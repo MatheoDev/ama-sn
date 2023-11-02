@@ -19,7 +19,7 @@ const User = () => {
   }, [])
 
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1">
       <View className="p-5">
         {
           info && <>
@@ -30,11 +30,11 @@ const User = () => {
       </View>
       <View className="flex flex-row justify-around py-4">
         <TouchableOpacity onPress={() => setPubOrShare('pub')} className={`w-1/2 border-b-2 ${pubOrShare === 'pub' ? 'border-info-300' : 'border-gray-300'}`}>
-          <Text className="text-center text-xl">Publications</Text>
+          <Text className="text-center pb-3 text-xl">Publications</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => setPubOrShare('share')} className={`w-1/2 border-b-2 ${pubOrShare === 'share' ? 'border-info-300' : 'border-gray-300'}`}>
-          <Text className="text-center text-xl">Partager</Text>
+          <Text className="text-center pb-3 text-xl">Partager</Text>
         </TouchableOpacity>
       </View>
       {
