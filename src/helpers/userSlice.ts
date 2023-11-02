@@ -8,6 +8,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 export interface UserState {
   current: UserType | null
   error: string | null
+  users: UserInfoType[]
 }
 
 export const createUser = createAsyncThunk(
@@ -63,9 +64,27 @@ export const fetchInfoUser = createAsyncThunk(
   }
 )
 
+export const fetchUsers = createAsyncThunk(
+  'user/fetchUsers',
+  async () => {
+    // request firestore
+    const collectionUser = collection(db, "User")
+    const queryUser = await getDocs(collectionUser)
+
+    // get user info
+    const users = queryUser.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data()
+    }))
+
+    return users
+  }
+)
+
 const initialState: UserState = {
   current: null,
-  error: null
+  error: null,
+  users: []
 }
 
 export const userSlice = createSlice({
@@ -104,6 +123,9 @@ export const userSlice = createSlice({
 
       state.current.info = action.payload as UserInfoType
     })
+    builder.addCase(fetchUsers.fulfilled, (state, action) => {
+      state.users = action.payload as UserInfoType[]
+    })
   }
 });
 
@@ -111,5 +133,6 @@ export const { } = userSlice.actions;
 
 export const selectUserConnected = (state: RootState) => state.user.current
 export const selectUserInfo = (state: RootState) => state.user.current?.info
+export const selectUsers = (state: RootState) => state.user.users
 
 export default userSlice.reducer

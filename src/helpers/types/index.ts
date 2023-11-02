@@ -31,4 +31,24 @@ type TopicType = {
   description: string,
 }
 
-export type { UserType, PublicationType, TopicType, UserInfoType }
+type ChatType = {
+  id?: string,
+  date: Timestamp,
+  from: string,
+  idConversation: string,
+  message: string,
+}
+
+type ConversationType = {
+  id: string,
+  users: string[],
+}
+
+export type { 
+  UserType, 
+  PublicationType, 
+  TopicType, 
+  UserInfoType, 
+  ChatType, 
+  ConversationType 
+}

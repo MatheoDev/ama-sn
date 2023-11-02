@@ -23,6 +23,7 @@ import Chat from "../pages/Chat"
 import UserIcon from "../components/Button/UserIcon"
 import User from "../pages/User"
 import TopicFeed from "../pages/TopicFeed"
+import ChatConv from "../pages/ChatConv"
 
 const Tab = createBottomTabNavigator<TabType>();
 const HomeStack = createNativeStackNavigator<HomeStackType>()
@@ -96,6 +97,7 @@ const ChatStackScreen = () => {
   return (
     <ChatStack.Navigator>
       <ChatStack.Screen name="Chat" component={Chat} options={{ title: 'Messagerie' }} />
+      <ChatStack.Screen name="ChatConv" component={ChatConv} options={{ title: 'Conversation' }} />
     </ChatStack.Navigator>
   )
 }
