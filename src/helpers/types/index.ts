@@ -8,10 +8,13 @@ type UserType = {
 }
 
 type PublicationType = {
-  id: string,
+  id?: string,
   title: string,
   body: string,
   date: Timestamp,
+  like: number,
+  idUser?: string,
+  idTopic: string,
 }
 
 type UserInfoType = {
