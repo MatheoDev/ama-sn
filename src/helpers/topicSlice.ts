@@ -11,6 +11,7 @@ export interface TopicState {
 export const fetchTopic = createAsyncThunk("topic/fetchTopic", async () => {
   const querySnapshot = await getDocs(collection(db, "Groupe"));
   const topics = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
     ...doc.data(),
   }));
 
