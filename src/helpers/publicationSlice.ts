@@ -1,13 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from './store'
 import { PublicationType } from './types/index'
-import { collection, getDocs, query } from 'firebase/firestore'
+import { DocumentData, addDoc, collection, getDocs } from 'firebase/firestore'
 import { db } from '../conf/firebase'
 
 
 export interface PublicationState {
     list: PublicationType[]
 }
+
+export const addPublicationToFirestore = createAsyncThunk<PublicationType, PublicationType>(
+    'publication/addPublication',
+    async (publication) => {
+        const addPublication = await addDoc(collection(db, "Publication"), publication as DocumentData);
+        const newPublication = { id: addPublication.id, ...publication }
+        return newPublication;
+    }
+)
 
 export const fetchPublication = createAsyncThunk(
     'publication/fetchPublication',

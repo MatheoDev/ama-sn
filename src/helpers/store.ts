@@ -18,10 +18,11 @@ export const store = configureStore({
           'user/createUser/fulfilled',
           'user/loginUser/fulfilled',
           'user/logoutUser/fulfilled',
-          'publication/fetchPublication/fulfilled'
+          'publication/fetchPublication/fulfilled',
+          'publication/addPublicationToFirestore/fulfilled'
         ],
         // Ignore these field paths in all actions
-        ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
+        ignoredActionPaths: ['meta.arg', 'payload.timestamp', 'payload.date'],
         // Ignore these paths in the state
         ignoredPaths: ['user.current', 'publication.list'],
       },
