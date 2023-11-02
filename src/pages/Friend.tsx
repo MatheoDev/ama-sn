@@ -16,7 +16,7 @@ const Friend = () => {
 
   return (
     <SafeAreaView>
-      <Text className="text-3xl text-left p-2 ml-3">Explorez les topic</Text>
+      <Text className="text-3xl text-left mt-5 p-2 ml-3">Explorez les topic</Text>
         <FlatList
           data={data}
           renderItem={TopicItem}
