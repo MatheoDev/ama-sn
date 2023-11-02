@@ -13,6 +13,7 @@ type PublicationType = {
   body: string,
   date: Timestamp,
   like: number,
+  likedByUsers?: string[],
   idUser?: string,
   idTopic: string,
 }
