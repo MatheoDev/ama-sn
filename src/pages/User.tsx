@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { FlatList, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 import { useAppDispatch, useAppSelector } from "../helpers/hook"
-import { fetchInfoUser, selectUserConnected, selectUserInfo } from "../helpers/userSlice"
+import { fetchInfoUser, logoutUser, selectUserConnected, selectUserInfo } from "../helpers/userSlice"
 import { PublicationType, UserInfoType } from "../helpers/types"
 import { fetchPublicationByUser, selectListPubUser } from "../helpers/publicationSlice"
 import PublicationItem from "../components/Publication/PublicationItem"
@@ -42,9 +42,15 @@ const User = () => {
         <FlatList
           data={publications}
           renderItem={({ item }) => <PublicationItem item={item} />}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id as string}
         />
       }
+      <TouchableOpacity
+        onPress={() => dispatch(logoutUser())}
+        className="bg-red-500 rounded-md p-2"
+      >
+        <Text className="text-white text-center">Déconnexion</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }

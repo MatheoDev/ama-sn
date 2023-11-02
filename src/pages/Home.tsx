@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, TouchableOpacity, FlatList, View, StyleSheet } from "react-native"
+import { SafeAreaView, FlatList, RefreshControl } from "react-native"
 import { useAppDispatch } from "../helpers/hook"
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
@@ -9,17 +9,23 @@ const Home = () => {
   const data = useSelector((state: any) => state.publication.list);
 
   const dispatch = useAppDispatch()
-  
+
   useEffect(() => {
     dispatch(fetchPublication())
   }, [])
 
   return (
-    <SafeAreaView className="">
-      <FlatList 
+    <SafeAreaView>
+      <FlatList
         data={data}
-        renderItem={PublicationItem}
-        keyExtractor={item => item.id}
+        renderItem={({ item }) => <PublicationItem item={item} />}
+        keyExtractor={(item, index) => item.id || String(index)}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={() => dispatch(fetchPublication())}
+          />
+        }
       />
     </SafeAreaView>
   )

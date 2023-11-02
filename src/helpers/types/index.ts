@@ -8,10 +8,13 @@ type UserType = {
 }
 
 type PublicationType = {
-  id: string,
+  id?: string,
   title: string,
   body: string,
   date: Timestamp,
+  like: number,
+  idUser?: string,
+  idTopic: string,
 }
 
 type UserInfoType = {
@@ -21,4 +24,10 @@ type UserInfoType = {
   description: string,
 }
 
-export type { UserType, PublicationType, UserInfoType }
+type TopicType = {
+  id: string,
+  title: string,
+  description: string,
+}
+
+export type { UserType, PublicationType, TopicType, UserInfoType }

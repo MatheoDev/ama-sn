@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from './store'
 import { PublicationType } from './types/index'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { DocumentData, addDoc, collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { db } from '../conf/firebase'
 
 
@@ -10,10 +10,21 @@ export interface PublicationState {
     listForUser: PublicationType[]
 }
 
+export const addPublicationToFirestore = createAsyncThunk<PublicationType, PublicationType>(
+    'publication/addPublication',
+    async (publication) => {
+        const addPublication = await addDoc(collection(db, "Publication"), publication as DocumentData);
+        const newPublication = { id: addPublication.id, ...publication }
+        return newPublication;
+    }
+)
+
 export const fetchPublication = createAsyncThunk(
     'publication/fetchPublication',
     async () => {
-        const querySnapshot = await getDocs(collection(db, "Publication"));
+        const collectionPublication = collection(db, "Publication");
+        const queryPublication = query(collectionPublication, orderBy("date", "desc"));
+        const querySnapshot = await getDocs(queryPublication);
         const publications = querySnapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data()
