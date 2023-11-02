@@ -19,7 +19,7 @@ const Friend = () => {
       <Text className="text-3xl text-left p-2 ml-3">Explorez les topic</Text>
         <FlatList
           data={data}
-          renderItem={TopicItem}
+          renderItem={({ item }) => <TopicItem item={item} />}
           keyExtractor={item => item.id}
         />
       </SafeAreaView>
