@@ -13,4 +13,9 @@ type PublicationType = {
   date: Timestamp,
 }
 
-export type { UserType, PublicationType }
+type TopicType = {
+  id: string,
+  title: string,
+}
+
+export type { UserType, PublicationType, TopicType }
