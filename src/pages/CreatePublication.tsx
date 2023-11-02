@@ -27,6 +27,7 @@ export const AddPublications = () => {
       title,
       body,
       date: currentDate,
+      like: 0,
     };
     dispatch(addPublicationToFirestore(publication));
 

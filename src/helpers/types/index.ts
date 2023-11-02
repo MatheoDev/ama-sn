@@ -12,6 +12,7 @@ type PublicationType = {
   title: string,
   body: string,
   date: Timestamp,
+  like: number,
 }
 
 type UserInfoType = {
