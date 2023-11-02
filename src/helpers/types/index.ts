@@ -16,6 +16,7 @@ type PublicationType = {
 type TopicType = {
   id: string,
   title: string,
+  description: string,
 }
 
 export type { UserType, PublicationType, TopicType }

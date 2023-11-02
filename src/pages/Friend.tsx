@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { useEffect } from "react"
 import { fetchTopic } from "../helpers/topicSlice"
 import { useAppDispatch } from "../helpers/hook"
+import TopicItem from "../components/Topic/TopicItem"
 
 const Friend = () => {
   const data = useSelector((state: any) => state.topic.list);
@@ -17,7 +18,7 @@ const Friend = () => {
     <SafeAreaView>
       <FlatList
         data={data}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
+        renderItem={TopicItem}
         keyExtractor={item => item.id}
       />
     </SafeAreaView>

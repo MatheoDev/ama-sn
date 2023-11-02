@@ -15,7 +15,7 @@ const Home = () => {
   }, [])
 
   return (
-    <SafeAreaView className="">
+    <SafeAreaView>
       <FlatList 
         data={data}
         renderItem={PublicationItem}
