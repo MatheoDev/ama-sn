@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from './store'
 import { PublicationType } from './types/index'
-import { DocumentData, addDoc, collection, getDocs, orderBy, query } from 'firebase/firestore'
+import { DocumentData, addDoc, collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import { db } from '../conf/firebase'
 
 
 export interface PublicationState {
     list: PublicationType[]
+    listForUser: PublicationType[]
 }
 
 export const addPublicationToFirestore = createAsyncThunk<PublicationType, PublicationType>(
@@ -33,8 +34,24 @@ export const fetchPublication = createAsyncThunk(
     }
 )
 
+export const fetchPublicationByUser = createAsyncThunk(
+    'publication/fetchPublicationByUser',
+    async (id: string) => {
+        const collectionPublication = collection(db, "Publication")
+        const queryPublication = query(collectionPublication, where("idUser", "==", id))
+        const querySnapshot = await getDocs(queryPublication);
+        const publications = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        return publications;
+    }
+)
+
 const initialState: PublicationState = {
-    list: []
+    list: [],
+    listForUser: []
 }
 
 export const publicationSlice = createSlice({
@@ -43,16 +60,20 @@ export const publicationSlice = createSlice({
   reducers: {
   },
     extraReducers: (builder) => {
-        builder
-        .addCase(fetchPublication.fulfilled, (state, action) => { 
+        builder.addCase(fetchPublication.fulfilled, (state, action) => { 
             const publications = action.payload as PublicationType[]
             state.list = publications
+        })
+        builder.addCase(fetchPublicationByUser.fulfilled, (state, action) => { 
+            const publications = action.payload as PublicationType[]
+            state.listForUser = publications
         })
     }
 });
 
-export const { } = publicationSlice.actions;
+export const { } = publicationSlice.actions
 
 export const selectList = (state: RootState) => state.publication.list
+export const selectListPubUser = (state: RootState) => state.publication.listForUser
 
 export default publicationSlice.reducer

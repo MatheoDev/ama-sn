@@ -68,7 +68,7 @@ const initialState: UserState = {
   error: null
 }
 
-export const favoriteSlice = createSlice({
+export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -107,9 +107,9 @@ export const favoriteSlice = createSlice({
   }
 });
 
-export const { } = favoriteSlice.actions;
+export const { } = userSlice.actions;
 
 export const selectUserConnected = (state: RootState) => state.user.current
 export const selectUserInfo = (state: RootState) => state.user.current?.info
 
-export default favoriteSlice.reducer
+export default userSlice.reducer
