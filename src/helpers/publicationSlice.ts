@@ -14,6 +14,7 @@ export const fetchPublication = createAsyncThunk(
     async () => {
         const querySnapshot = await getDocs(collection(db, "Publication"));
         const publications = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
             ...doc.data()
         }));
 

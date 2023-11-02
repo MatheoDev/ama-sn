@@ -4,6 +4,7 @@ type UserType = {
   uid: string,
   email: string,
   password?: string,
+  info?: UserInfoType
 }
 
 type PublicationType = {
@@ -13,4 +14,11 @@ type PublicationType = {
   date: Timestamp,
 }
 
-export type { UserType, PublicationType }
+type UserInfoType = {
+  id: string,
+  uid: string,
+  pseudo: string,
+  description: string,
+}
+
+export type { UserType, PublicationType, UserInfoType }
