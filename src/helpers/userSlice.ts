@@ -45,10 +45,10 @@ export const logoutUser = createAsyncThunk(
 
 export const fetchInfoUser = createAsyncThunk(
   'user/fetchInfoUser',
-  async () => {
+  async (uid: string) => {
     // request firestore
     const collectionUser = collection(db, "User")
-    const queryUser = query(collectionUser, where("uid", "==", auth.currentUser?.uid))
+    const queryUser = query(collectionUser, where("uid", "==", uid))
     const querySnapshot = await getDocs(queryUser)
 
     // get user info

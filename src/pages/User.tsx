@@ -14,7 +14,7 @@ const User = () => {
   const publications = useAppSelector(selectListPubUser) as PublicationType[]
 
   useEffect(() => {
-    dispatch(fetchInfoUser())
+    dispatch(fetchInfoUser(user?.uid as string))
     dispatch(fetchPublicationByUser(user?.uid as string))
   }, [])
 
