@@ -20,6 +20,8 @@ import Friend from "../pages/Friend"
 import Notification from "../pages/Notification"
 import CreatePublication from "../pages/CreatePublication"
 import Chat from "../pages/Chat"
+import UserIcon from "../components/Button/UserIcon"
+import User from "../pages/User"
 
 const Tab = createBottomTabNavigator<TabType>();
 const HomeStack = createNativeStackNavigator<HomeStackType>()
@@ -32,7 +34,17 @@ const ChatStack = createNativeStackNavigator<ChatStackType>()
 const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+      <HomeStack.Screen 
+        name="Home"
+        component={Home}
+        options={
+          {
+            headerRight: () => <UserIcon />,
+            title: 'Ama',
+          }
+        } 
+      />
+      <HomeStack.Screen name="User" component={User} />
     </HomeStack.Navigator>
   )
 }

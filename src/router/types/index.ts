@@ -8,6 +8,7 @@ export type TabType = {
 
 export type HomeStackType = {
   Home: undefined,
+  User: undefined,
 }
 
 export type LogSignStackType = {

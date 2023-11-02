@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from './store'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { auth } from '../conf/firebase'
-import { UserType } from './types'
+import { auth, db } from '../conf/firebase'
+import { UserInfoType, UserType } from './types'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 
 export interface UserState {
   current: UserType | null
@@ -42,6 +43,26 @@ export const logoutUser = createAsyncThunk(
   }
 )
 
+export const fetchInfoUser = createAsyncThunk(
+  'user/fetchInfoUser',
+  async () => {
+    // request firestore
+    const collectionUser = collection(db, "User")
+    const queryUser = query(collectionUser, where("uid", "==", auth.currentUser?.uid))
+    const querySnapshot = await getDocs(queryUser)
+
+    // get user info
+    const user = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data()
+    }))
+
+    // normally there is only one user info
+    if (!user.length) return null
+    return user[0]
+  }
+)
+
 const initialState: UserState = {
   current: null,
   error: null
@@ -77,11 +98,18 @@ export const favoriteSlice = createSlice({
       state.current = null
       state.error = null
     })
+    builder.addCase(fetchInfoUser.fulfilled, (state, action) => {
+      if (!state.current) return
+      if (!action.payload) return
+
+      state.current.info = action.payload as UserInfoType
+    })
   }
 });
 
 export const { } = favoriteSlice.actions;
 
 export const selectUserConnected = (state: RootState) => state.user.current
+export const selectUserInfo = (state: RootState) => state.user.current?.info
 
 export default favoriteSlice.reducer
