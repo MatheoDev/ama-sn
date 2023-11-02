@@ -18,7 +18,7 @@ const Home = () => {
     <SafeAreaView>
       <FlatList
         data={data}
-        renderItem={PublicationItem}
+        renderItem={({ item }) => <PublicationItem item={item} />}
         keyExtractor={(item, index) => item.id || String(index)}
         refreshControl={
           <RefreshControl

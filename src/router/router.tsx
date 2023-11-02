@@ -22,6 +22,7 @@ import CreatePublication from "../pages/CreatePublication"
 import Chat from "../pages/Chat"
 import UserIcon from "../components/Button/UserIcon"
 import User from "../pages/User"
+import TopicFeed from "../pages/TopicFeed"
 
 const Tab = createBottomTabNavigator<TabType>();
 const HomeStack = createNativeStackNavigator<HomeStackType>()
@@ -70,6 +71,7 @@ const FriendStackScreen = () => {
   return (
     <FriendStack.Navigator>
       <FriendStack.Screen name="Friend" component={Friend} options={{ title: 'Groupes' }} />
+      <FriendStack.Screen name="TopicFeed" component={TopicFeed} options={{ title: 'Feed' }} />
     </FriendStack.Navigator>
   )
 }
