@@ -5,10 +5,17 @@ import { useDispatch } from "react-redux";
 import { PublicationType } from "../helpers/types";
 import { AppDispatch } from "../helpers/store";
 import { Timestamp } from "firebase/firestore";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+
+type RootStackParamList = {
+  Home: undefined;
+};
 
 export const AddPublications = () => {
 
   const dispatch = useDispatch<AppDispatch>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -25,6 +32,8 @@ export const AddPublications = () => {
 
     setTitle("");
     setBody("");
+
+    navigation.navigate('Home');
   };
   
   return (
