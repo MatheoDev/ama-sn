@@ -21,4 +21,10 @@ type UserInfoType = {
   description: string,
 }
 
-export type { UserType, PublicationType, UserInfoType }
+type TopicType = {
+  id: string,
+  title: string,
+  description: string,
+}
+
+export type { UserType, PublicationType, TopicType, UserInfoType }
