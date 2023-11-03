@@ -2,9 +2,11 @@ import { useEffect, useState } from "react"
 import { FlatList, RefreshControl, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 import { useAppDispatch, useAppSelector } from "../helpers/hook"
 import { fetchInfoUser, logoutUser, selectUserConnected, selectUserInfo } from "../helpers/userSlice"
-import { PublicationType, UserInfoType } from "../helpers/types"
+import { CommentType, PublicationType, UserInfoType } from "../helpers/types"
 import { fetchPublicationByUser, selectListPubUser } from "../helpers/publicationSlice"
 import PublicationItem from "../components/Publication/PublicationItem"
+import { fetchCommentByUser, selectCommentsUser } from "../helpers/commentSlice"
+import CommentItem from "../components/Comment/CommentItem"
 
 const User = () => {
   const dispatch = useAppDispatch()
@@ -12,10 +14,12 @@ const User = () => {
   const user = useAppSelector(selectUserConnected)
   const info = useAppSelector(selectUserInfo) as UserInfoType
   const publications = useAppSelector(selectListPubUser) as PublicationType[]
+  const commentaires = useAppSelector(selectCommentsUser) as CommentType[]
 
   useEffect(() => {
     dispatch(fetchInfoUser(user?.uid as string))
     dispatch(fetchPublicationByUser(user?.uid as string))
+    dispatch(fetchCommentByUser(user?.uid as string))
   }, [])
 
   return (
@@ -35,7 +39,7 @@ const User = () => {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => setPubOrShare('share')} className={`w-1/2 border-b-2 ${pubOrShare === 'share' ? 'border-info-300' : 'border-gray-300'}`}>
-          <Text className="text-center pb-3 text-xl">Partager</Text>
+          <Text className="text-center pb-3 text-xl">Commentaires</Text>
         </TouchableOpacity>
       </View>
       {
@@ -48,6 +52,20 @@ const User = () => {
             <RefreshControl
               refreshing={false}
               onRefresh={() => dispatch(fetchPublicationByUser(user?.uid as string))}
+            />
+          }
+        />
+      }
+      {
+        commentaires && pubOrShare === 'share' &&
+        <FlatList
+          data={commentaires}
+          renderItem={({ item }) => <CommentItem comment={item} />}
+          keyExtractor={item => item.id as string}
+          refreshControl={
+            <RefreshControl
+              refreshing={false}
+              onRefresh={() => dispatch(fetchCommentByUser(user?.uid as string))}
             />
           }
         />

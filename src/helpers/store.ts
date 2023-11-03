@@ -48,6 +48,7 @@ export const store = configureStore({
           'comment/addCommentToFirestore/fulfilled',
           'topic/fetchTopic/fulfilled',
           'topic/fetchPublicationByTopic/fulfilled',
+          'comment/fetchCommentByUser/fulfilled',
           FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER
         ],
         // Ignore these field paths in all actions

@@ -11,7 +11,7 @@ export interface CommentState {
 }
 
 export const addCommentToFirestore = createAsyncThunk<CommentType, CommentType>(
-    'Comment/addComment',
+    'comment/addComment',
     async (Comment) => {
         const addComment = await addDoc(collection(db, "Comment"), Comment as DocumentData);
         const newComment = { id: addComment.id, ...Comment }
@@ -20,7 +20,7 @@ export const addCommentToFirestore = createAsyncThunk<CommentType, CommentType>(
 )
 
 export const fetchComment = createAsyncThunk(
-    'Comment/fetchComment',
+    'comment/fetchComment',
     async () => {
         const collectionComment = collection(db, "Comment");
         const queryComment = query(collectionComment, orderBy("date", "desc"));
@@ -35,7 +35,7 @@ export const fetchComment = createAsyncThunk(
 )
 
 export const fetchCommentByUser = createAsyncThunk(
-    'Comment/fetchCommentByUser',
+    'comment/fetchCommentByUser',
     async (id: string) => {
         const collectionComment = collection(db, "Comment")
         const queryComment = query(collectionComment, where("idUser", "==", id))
@@ -74,6 +74,6 @@ export const commentSlice = createSlice({
 export const { } = commentSlice.actions
 
 export const selectList = (state: RootState) => state.comment.list
-export const selectListPubUser = (state: RootState) => state.comment.listForUser
+export const selectCommentsUser = (state: RootState) => state.comment.listForUser
 
 export default commentSlice.reducer
