@@ -10,7 +10,6 @@ import { ConversationType } from "../helpers/types"
 const Chat = () => {
   const [snapShot, setSnapShot] = useState<ConversationType[]>([])
   const user = useAppSelector(selectUserConnected)
-  // const convs = useAppSelector(selectConversations)
   const users = useAppSelector(selectUsers)
   const dispatch = useAppDispatch()
 
@@ -34,7 +33,9 @@ const Chat = () => {
   return (
     <SafeAreaView>
       {!users.length || !snapShot.length ?
-        <Text>Vous n'avez pas de conversation en cours</Text>
+        <Text className="text-center text-black text-xl my-10">
+          Vous n'avez pas de conversation en cours
+        </Text>
         :
         <FlatList
           data={snapShot}

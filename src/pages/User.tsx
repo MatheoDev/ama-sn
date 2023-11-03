@@ -22,10 +22,11 @@ const User = () => {
     <SafeAreaView className="flex-1">
       <View className="p-5">
         {
-          info && <>
+          info ? <>
             <Text className="text-3xl">Bonjour @{info.pseudo}</Text>
             <Text className="text-xl pt-4">{info.description}</Text>
           </>
+          : <Text className="text-xl">Bonjour, veuillez créer votre profil dans les paramètres</Text>
         }
       </View>
       <View className="flex flex-row justify-around py-4">
