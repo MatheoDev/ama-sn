@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { ChatType } from "./types"
+import { ChatType, ConversationType } from "./types"
 import { collection, addDoc } from "firebase/firestore"
 import { db } from "../conf/firebase"
 
@@ -11,6 +11,14 @@ export const sendMessage = createAsyncThunk(
   async (message: ChatType) => {
     const collectionChat = collection(db, "Chat")
     await addDoc(collectionChat, message)
+  }
+)
+
+export const createConversation = createAsyncThunk(
+  'chat/createConversation',
+  async (conv: ConversationType) => {
+    const collectionChat = collection(db, "Conversation")
+    await addDoc(collectionChat, conv)
   }
 )
 

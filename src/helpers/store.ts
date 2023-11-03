@@ -12,6 +12,7 @@ import {
 } from 'redux-persist'
 import AsyncStorage from '@react-native-async-storage/async-storage';import userSlice from './userSlice'
 import publicationSlice from './publicationSlice'
+import commentSlice from './commentSlice'
 import topicSlice from './topicSlice'
 import chatSlice from './chatSlice';
 
@@ -27,6 +28,7 @@ export const store = configureStore({
   reducer: {
     user: persistedReducer,
     publication: publicationSlice,
+    comment: commentSlice,
     topic: topicSlice,
     chat: chatSlice
   },
@@ -41,6 +43,9 @@ export const store = configureStore({
           'publication/fetchPublication/fulfilled',
           'publication/fetchPublicationByUser/fulfilled',
           'publication/addPublicationToFirestore/fulfilled',
+          'comment/fetchComment/fulfilled',
+          'comment/fetchCommentByUser/fulfilled',
+          'comment/addCommentToFirestore/fulfilled',
           'topic/fetchTopic/fulfilled',
           'topic/fetchPublicationByTopic/fulfilled',
           FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER
@@ -51,9 +56,11 @@ export const store = configureStore({
         ignoredPaths: [
           'user.current',
           'publication.list', 
+          'comment.list',
           'topic.list', 
-          'topic.listPublication',  
+          'topic.listPublication',
           'publication.listForUser',
+          'comment.listForUser'
         ],
       },
     }),

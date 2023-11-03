@@ -3,12 +3,14 @@ import { useAppDispatch, useAppSelector } from "../helpers/hook"
 import { selectUserConnected, updateUser } from "../helpers/userSlice"
 import { useState } from "react"
 import { UserInfoType } from "../helpers/types"
+import { useNavigation } from "@react-navigation/native"
 
 const Setting = () => {
   const user = useAppSelector(selectUserConnected)
   const [pseudo, setPseudo] = useState<string>(user?.info?.pseudo ? user.info.pseudo : '')
   const [description, setDescription] = useState<string>(user?.info?.description ? user.info.description : '')
   const dispatch = useAppDispatch()
+  const navigation = useNavigation()
 
   const handleModify = () => {
     const userInfo: UserInfoType = {
@@ -17,6 +19,7 @@ const Setting = () => {
       uid: user?.uid as string
     }
     dispatch(updateUser(userInfo))
+    navigation.goBack()
   }
 
   return (

@@ -17,7 +17,7 @@ const Conversation = ({ conv, users }: ConversationProp) => {
   return (
     <TouchableOpacity 
       className="my-2 mx-4 p-4 border border-gray-300 rounded-md bg-white"
-      onPress={() => navigation.navigate("ChatConv", { id: conv.id, users: usersConv })}
+      onPress={() => navigation.navigate("ChatConv", { id: conv.id as string, users: usersConv })}
     >
       <Text>
         {userLabelConv}
