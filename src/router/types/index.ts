@@ -12,7 +12,7 @@ export type HomeStackType = {
   Home: undefined,
   User: undefined,
   Setting: undefined,
-  CreateComment: undefined,
+  CreateComment: { publicationId: string },
 }
 
 export type LogSignStackType = {

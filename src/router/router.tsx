@@ -62,7 +62,6 @@ const HomeStackScreen = () => {
         component={Setting}
         options={{ title: 'Paramètres' }}
       />
-      <HomeStack.Screen name="User" component={User} />
       <HomeStack.Screen name="CreateComment" component={CreateComment} options={{ title: 'Publier un commentaire' }} />
     </HomeStack.Navigator>
   )

@@ -7,6 +7,8 @@ import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../helpers/hook";
 import { selectUserConnected } from "../../helpers/userSlice";
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { HomeStackType } from "../../router/types";
 
 type PublicationItemProps = {
   item: PublicationType
@@ -14,7 +16,7 @@ type PublicationItemProps = {
 
 const PublicationItem = ({ item }: PublicationItemProps) => {
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackType>>();
 
   const currentUser = useAppSelector(selectUserConnected);
   const currentUserID = currentUser?.uid;
@@ -87,7 +89,7 @@ const PublicationItem = ({ item }: PublicationItemProps) => {
           <AntDesign name="like1" size={18} color="black" />
           <Text className='text-sm ml-1'>{likes}</Text>
         </TouchableOpacity>
-        <TouchableOpacity className='mx-2' onPress={() => navigateToComments(item.id)}>
+        <TouchableOpacity className='mx-2' onPress={() => navigateToComments(item.id as string)}>
           <FontAwesome name="comment" size={18} color="black" />
         </TouchableOpacity>
         <TouchableOpacity className='mx-2'>
