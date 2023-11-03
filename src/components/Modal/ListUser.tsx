@@ -1,9 +1,10 @@
 
 import { FlatList, Modal, SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../helpers/hook';
-import { selectUserConnected, selectUsers } from '../../helpers/userSlice';
+import { fetchUsers, selectUserConnected, selectUsers } from '../../helpers/userSlice';
 import { ConversationType } from '../../helpers/types';
 import { createConversation } from '../../helpers/chatSlice';
+import { useEffect } from 'react';
 
 type ListUserProp = {
   showModal: boolean,
@@ -17,6 +18,10 @@ const ListUser = ({ showModal, setModal, snapShot }: ListUserProp) => {
   const usersInSnapShot = snapShot.map((conv) => conv.users).flat()
   const usersFiltered = users.filter((user) => user.uid !== userConnected?.uid && !usersInSnapShot.includes(user.uid))
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(fetchUsers())
+  }, [])
 
   const handleClick = (uid: string) => {
     const conv: ConversationType = {
