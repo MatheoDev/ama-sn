@@ -18,6 +18,14 @@ type PublicationType = {
   idTopic: string,
 }
 
+type CommentType = {
+  text: String,
+  id?: string,
+  date: Timestamp,
+  idUser?: string,
+  idPublication: string,
+}
+
 type UserInfoType = {
   id: string,
   uid: string,
@@ -50,5 +58,6 @@ export type {
   TopicType, 
   UserInfoType, 
   ChatType, 
-  ConversationType 
+  ConversationType,
+  CommentType,
 }
