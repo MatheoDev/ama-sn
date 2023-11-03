@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, FlatList } from 'react-native';
+import { View, Text, TextInput, Button, FlatList, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import CommentItem from '../components/Comment/CommentItem';
 import { db } from "../conf/firebase";
@@ -26,16 +26,15 @@ const CommentsPage = () => {
     const [comments, setComments] = useState<CommentType[]>([]);
     const [newComment, setNewComment] = useState('');
 
-        const currentUser = useAppSelector(selectUserConnected);
-        const currentUserID = currentUser?.uid;
+    const currentUser = useAppSelector(selectUserConnected);
+    const currentUserID = currentUser?.uid;
 
-        const handleSendComment = () => {
+    const handleSendComment = () => {
         if (!newComment || !publicationId) return;
-        
 
         const comment: CommentType = {
             idPublication: publicationId,
-            idUser: currentUserID as string,
+            idUser: currentUserID,
             text: newComment,
             date: Timestamp.now(),
         };
@@ -46,56 +45,57 @@ const CommentsPage = () => {
 
     useEffect(() => {
         const fetchPublication = async () => {
-        if (!publicationId) return;
+            if (!publicationId) return;
 
-        const publicationRef = doc(db, "Publication", publicationId);
-        const pubDoc = await getDoc(publicationRef);
+            const publicationRef = doc(db, "Publication", publicationId);
+            const pubDoc = await getDoc(publicationRef);
 
-        if (pubDoc.exists()) {
-            setPublication({
-            id: publicationId,
-            ...pubDoc.data() as PublicationType
+            if (pubDoc.exists()) {
+                setPublication({
+                    id: publicationId,
+                    ...pubDoc.data() as PublicationType
+                });
+            }
+
+            const commentsRef = collection(db, "Comment");
+            const q = query(commentsRef, where("idPublication", "==", publicationId));
+            const commentsSnapshot = await getDocs(q);
+
+            const fetchedComments: CommentType[] = [];
+            commentsSnapshot.forEach((doc) => {
+                const data = doc.data() as CommentType;
+                fetchedComments.push({ id: doc.id, ...data });
             });
-        }
-            
-        const commentsRef = collection(db, "Comment");
-        const q = query(commentsRef, where("publicationId", "==", publicationId));
-        const commentsSnapshot = await getDocs(q);
-        
-        const fetchedComments: CommentType[] = [];
-        commentsSnapshot.forEach((doc) => {
-            const data = doc.data() as CommentType;
-            fetchedComments.push({ id: doc.id, ...data });
-        });
-        console.log(fetchedComments)
 
-        setComments(fetchedComments);
+            setComments(fetchedComments);
         };
 
         fetchPublication();
     }, [publicationId]);
 
     return (
-        <View className='flex-1'>
-        <View className='p-10'>
-            {publication && <PublicationItem item={publication} />}
-        </View>
-        <FlatList
-            data={comments}
-            keyExtractor={(item, index) => item.id || String(index)}
-            renderItem={({ item }) => <CommentItem comment={item} />}
-        />
-        <View className="flex-row p-2.5 border-t border-gray-300">
-            <TextInput
-            value={newComment}
-            onChangeText={setNewComment}
-            placeholder="Ajouter un commentaire..."
-            className="flex-1 border border-gray-300 p-1.5 mr-2.5"
-            />
-            <Button title="Envoyer" onPress={handleSendComment} />
-        </View>
-        </View>
+        <KeyboardAvoidingView className="flex-1" behavior="padding" keyboardVerticalOffset={100}>
+            <SafeAreaView className='flex-1'>
+                <View className='p-10'>
+                    {publication && <PublicationItem item={publication} />}
+                </View>
+                <FlatList
+                    data={comments}
+                    keyExtractor={(item, index) => item.id || String(index)}
+                    renderItem={({ item }) => <CommentItem comment={item} />}
+                />
+                <View className="flex-row p-2.5 border-t border-gray-300">
+                    <TextInput
+                        value={newComment}
+                        onChangeText={setNewComment}
+                        placeholder="Ajouter un commentaire..."
+                        className="flex-1 border border-gray-300 p-1.5 mr-2.5"
+                    />
+                    <Button title="Envoyer" onPress={handleSendComment} />
+                </View>
+            </SafeAreaView>
+        </KeyboardAvoidingView>
     );
-    };
+};
 
 export default CommentsPage;
