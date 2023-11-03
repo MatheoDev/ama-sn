@@ -26,6 +26,7 @@ import TopicFeed from "../pages/TopicFeed"
 import ChatConv from "../pages/ChatConv"
 import SettingIcon from "../components/Button/SettingIcon"
 import Setting from "../pages/Setting"
+import { Image } from "react-native"
 
 const Tab = createBottomTabNavigator<TabType>();
 const HomeStack = createNativeStackNavigator<HomeStackType>()
@@ -44,7 +45,7 @@ const HomeStackScreen = () => {
         options={
           {
             headerRight: () => <UserIcon />,
-            title: 'Rozo',
+            headerTitle: () => <Image source={require('../../assets/rozo_logo2.png')} style={{ width: 45, height: 45 }} />
           }
         }
       />
