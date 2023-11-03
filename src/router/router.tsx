@@ -17,7 +17,6 @@ import Signup from "../pages/Signup"
 import { useAppSelector } from "../helpers/hook"
 import { selectUserConnected } from "../helpers/userSlice"
 import Friend from "../pages/Friend"
-import Notification from "../pages/Notification"
 import CreatePublication from "../pages/CreatePublication"
 import Chat from "../pages/Chat"
 import UserIcon from "../components/Button/UserIcon"
@@ -32,7 +31,6 @@ const Tab = createBottomTabNavigator<TabType>();
 const HomeStack = createNativeStackNavigator<HomeStackType>()
 const LogSignStack = createNativeStackNavigator<LogSignStackType>()
 const FriendStack = createNativeStackNavigator<FriendStackType>()
-const NotificationStack = createNativeStackNavigator<NotificationStackType>()
 const CreatePublicationStack = createNativeStackNavigator<CreatePublicationStackType>()
 const ChatStack = createNativeStackNavigator<ChatStackType>()
 
@@ -93,14 +91,6 @@ const FriendStackScreen = () => {
   )
 }
 
-const NotificationStackScreen = () => {
-  return (
-    <NotificationStack.Navigator>
-      <NotificationStack.Screen name="Notification" component={Notification} options={{ title: 'Notification' }} />
-    </NotificationStack.Navigator>
-  )
-}
-
 const CreatePublicationStackScreen = () => {
   return (
     <CreatePublicationStack.Navigator>
@@ -145,11 +135,6 @@ const Router = () => {
               name="ChatPage"
               component={ChatStackScreen}
               options={{ headerShown: false, tabBarShowLabel: false, tabBarIcon: ({ color, size }) => <Feather name="message-circle" size={size} color={color} /> }}
-            />
-            <Tab.Screen
-              name="NotificationPage"
-              component={NotificationStackScreen}
-              options={{ headerShown: false, tabBarShowLabel: false, tabBarIcon: ({ color, size }) => <Feather name="bell" size={size} color={color} /> }}
             />
           </Tab.Navigator>
           :

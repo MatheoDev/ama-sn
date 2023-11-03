@@ -40,7 +40,7 @@ type ChatType = {
 }
 
 type ConversationType = {
-  id: string,
+  id?: string,
   users: string[],
 }
 
