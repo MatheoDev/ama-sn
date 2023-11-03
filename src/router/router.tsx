@@ -18,6 +18,7 @@ import { useAppSelector } from "../helpers/hook"
 import { selectUserConnected } from "../helpers/userSlice"
 import Friend from "../pages/Friend"
 import CreatePublication from "../pages/CreatePublication"
+import CreateComment from "../pages/CreateComment"
 import Chat from "../pages/Chat"
 import UserIcon from "../components/Button/UserIcon"
 import User from "../pages/User"
@@ -61,6 +62,8 @@ const HomeStackScreen = () => {
         component={Setting}
         options={{ title: 'Paramètres' }}
       />
+      <HomeStack.Screen name="User" component={User} />
+      <HomeStack.Screen name="CreateComment" component={CreateComment} options={{ title: 'Publier un commentaire' }} />
     </HomeStack.Navigator>
   )
 }
