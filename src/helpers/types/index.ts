@@ -27,7 +27,7 @@ type CommentType = {
 }
 
 type UserInfoType = {
-  id: string,
+  id?: string,
   uid: string,
   pseudo: string,
   description: string,
@@ -48,7 +48,7 @@ type ChatType = {
 }
 
 type ConversationType = {
-  id: string,
+  id?: string,
   users: string[],
 }
 

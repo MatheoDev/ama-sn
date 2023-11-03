@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Image, SafeAreaView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { useAppDispatch, useAppSelector } from "../helpers/hook"
 import { createUser } from "../helpers/userSlice"
 import { UserType } from "../helpers/types"
@@ -52,7 +52,10 @@ const Signup = () => {
 
   return (
     <SafeAreaView className="flex-1">
-    <Text className="text-4xl text-center pt-20">Ama</Text>
+      <View className="flex flex-row items-center justify-center pt-20 gap-1">
+        <Image source={require('../../assets/rozo_logo2.png')} style={{ width: 50, height: 50 }} />
+        <Text className="text-4xl">Rozo</Text>
+      </View>
       <View className="flex gap-4 p-5 pt-10">
         <Text className="text-3xl font-bold">S'inscrire</Text>
         {errorLogin && <Text className="text-red-500 pl-1">Le compte n'a pas pu être créé</Text>}

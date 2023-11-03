@@ -3,7 +3,7 @@ import { RootState } from './store'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth, db } from '../conf/firebase'
 import { UserInfoType, UserType } from './types'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { addDoc, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
 
 export interface UserState {
   current: UserType | null
@@ -81,6 +81,31 @@ export const fetchUsers = createAsyncThunk(
   }
 )
 
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (user: UserInfoType) => {
+    // request firestore
+    const collectionUser = collection(db, "User")
+    const queryUser = query(collectionUser, where("uid", "==", user.uid))
+    const querySnapshot = await getDocs(queryUser)
+
+    const userInfo = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data()
+    }))
+
+    if (!userInfo.length) {
+      // pas d'info on l'a créé 
+      await addDoc(collectionUser, { ...user })
+      return user
+    }
+
+    const docRef = doc(db, "User", userInfo[0].id)
+    await updateDoc(docRef, { ...user })
+    return user
+  }
+)
+
 const initialState: UserState = {
   current: null,
   error: null,
@@ -125,6 +150,12 @@ export const userSlice = createSlice({
     })
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.users = action.payload as UserInfoType[]
+    })
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      if (!state.current) return
+      if (!action.payload) return
+
+      state.current.info = action.payload as UserInfoType
     })
   }
 });

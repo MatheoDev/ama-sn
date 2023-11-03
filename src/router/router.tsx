@@ -17,7 +17,6 @@ import Signup from "../pages/Signup"
 import { useAppSelector } from "../helpers/hook"
 import { selectUserConnected } from "../helpers/userSlice"
 import Friend from "../pages/Friend"
-import Notification from "../pages/Notification"
 import CreatePublication from "../pages/CreatePublication"
 import CreateComment from "../pages/CreateComment"
 import Chat from "../pages/Chat"
@@ -25,27 +24,43 @@ import UserIcon from "../components/Button/UserIcon"
 import User from "../pages/User"
 import TopicFeed from "../pages/TopicFeed"
 import ChatConv from "../pages/ChatConv"
+import SettingIcon from "../components/Button/SettingIcon"
+import Setting from "../pages/Setting"
+import { Image } from "react-native"
 
 const Tab = createBottomTabNavigator<TabType>();
 const HomeStack = createNativeStackNavigator<HomeStackType>()
 const LogSignStack = createNativeStackNavigator<LogSignStackType>()
 const FriendStack = createNativeStackNavigator<FriendStackType>()
-const NotificationStack = createNativeStackNavigator<NotificationStackType>()
 const CreatePublicationStack = createNativeStackNavigator<CreatePublicationStackType>()
 const ChatStack = createNativeStackNavigator<ChatStackType>()
 
 const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen 
+      <HomeStack.Screen
         name="Home"
         component={Home}
         options={
           {
             headerRight: () => <UserIcon />,
-            title: 'Ama',
+            headerTitle: () => <Image source={require('../../assets/rozo_logo2.png')} style={{ width: 45, height: 45 }} />
           }
-        } 
+        }
+      />
+      <HomeStack.Screen
+        name="User" component={User}
+        options={
+          {
+            title: 'Profil',
+            headerRight: () => <SettingIcon />,
+          }
+        }
+      />
+      <HomeStack.Screen
+        name="Setting"
+        component={Setting}
+        options={{ title: 'Paramètres' }}
       />
       <HomeStack.Screen name="User" component={User} />
       <HomeStack.Screen name="CreateComment" component={CreateComment} options={{ title: 'Publier un commentaire' }} />
@@ -73,17 +88,9 @@ const LogSignStackScreen = () => {
 const FriendStackScreen = () => {
   return (
     <FriendStack.Navigator>
-      <FriendStack.Screen name="Friend" component={Friend} options={{ title: 'Groupes' }} />
+      <FriendStack.Screen name="Friend" component={Friend} options={{ title: 'Racines' }} />
       <FriendStack.Screen name="TopicFeed" component={TopicFeed} options={{ title: 'Feed' }} />
     </FriendStack.Navigator>
-  )
-}
-
-const NotificationStackScreen = () => {
-  return (
-    <NotificationStack.Navigator>
-      <NotificationStack.Screen name="Notification" component={Notification} options={{ title: 'Notification' }} />
-    </NotificationStack.Navigator>
   )
 }
 
@@ -131,11 +138,6 @@ const Router = () => {
               name="ChatPage"
               component={ChatStackScreen}
               options={{ headerShown: false, tabBarShowLabel: false, tabBarIcon: ({ color, size }) => <Feather name="message-circle" size={size} color={color} /> }}
-            />
-            <Tab.Screen
-              name="NotificationPage"
-              component={NotificationStackScreen}
-              options={{ headerShown: false, tabBarShowLabel: false, tabBarIcon: ({ color, size }) => <Feather name="bell" size={size} color={color} /> }}
             />
           </Tab.Navigator>
           :
