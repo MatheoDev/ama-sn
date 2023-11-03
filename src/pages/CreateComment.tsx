@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, FlatList } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import CommentItem from '../components/Comment/CommentItem';
 import { db } from "../conf/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { Timestamp, doc, getDoc } from "firebase/firestore";
 import { PublicationType, CommentType } from "../helpers/types";
 import PublicationItem from '../components/Publication/PublicationItem';
 import { useDispatch } from 'react-redux';
@@ -13,10 +13,15 @@ import { useAppSelector } from '../helpers/hook';
 import { selectUserConnected } from "../helpers/userSlice";
 import { collection, query, where, getDocs } from "firebase/firestore";
 
-const CommentsPage: React.FC = () => {
+type ParamsRoute = {
+    publicationId: string;
+};
+
+const CommentsPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const route = useRoute();
-    const publicationId = route.params?.publicationId;
+    const params: ParamsRoute = route.params as ParamsRoute;
+    const publicationId = params?.publicationId;
     const [publication, setPublication] = useState<PublicationType | null>(null);
     const [comments, setComments] = useState<CommentType[]>([]);
     const [newComment, setNewComment] = useState('');
@@ -28,11 +33,11 @@ const CommentsPage: React.FC = () => {
         if (!newComment || !publicationId) return;
         
 
-        const comment = {
-            publicationId,
-            userId: currentUserID,
+        const comment: CommentType = {
+            idPublication: publicationId,
+            idUser: currentUserID as string,
             text: newComment,
-            date: new Date(),
+            date: Timestamp.now(),
         };
 
         dispatch(addCommentToFirestore(comment));

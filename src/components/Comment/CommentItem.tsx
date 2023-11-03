@@ -1,18 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { CommentType, UserInfoType } from '../../helpers/types/index';
-import { fetchInfoUser, selectUserConnected, selectUserInfo } from '../../helpers/userSlice';
-import { useDispatch } from 'react-redux';
+import { selectUserInfo } from '../../helpers/userSlice';
 import { useAppSelector } from '../../helpers/hook';
 
 type CommentItemProps = {
   comment: CommentType;
 };
 
-const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
-
-    const dispatch = useDispatch();
-    const user = useAppSelector(selectUserConnected)
+const CommentItem = ({ comment }: CommentItemProps) => {
     const info = useAppSelector(selectUserInfo) as UserInfoType
     const date = new Date(comment.date.seconds * 1000);
     const formattedDate = date.toLocaleString();
