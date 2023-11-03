@@ -52,7 +52,7 @@ const Signup = () => {
 
   return (
     <SafeAreaView className="flex-1">
-    <Text className="text-4xl text-center pt-20">Ama</Text>
+    <Text className="text-4xl text-center pt-20">Rozo</Text>
       <View className="flex gap-4 p-5 pt-10">
         <Text className="text-3xl font-bold">S'inscrire</Text>
         {errorLogin && <Text className="text-red-500 pl-1">Le compte n'a pas pu être créé</Text>}

@@ -42,7 +42,7 @@ const Login = () => {
 
   return (
     <SafeAreaView className="flex-1">
-      <Text className="text-4xl text-center pt-20">Ama</Text>
+      <Text className="text-4xl text-center pt-20">Rozo</Text>
       <View className="flex gap-4 p-5 pt-10">
         <Text className="text-3xl font-bold">Se connecter</Text>
         <View className="flex flex-col gap-1">

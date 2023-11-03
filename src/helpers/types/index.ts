@@ -19,7 +19,7 @@ type PublicationType = {
 }
 
 type UserInfoType = {
-  id: string,
+  id?: string,
   uid: string,
   pseudo: string,
   description: string,

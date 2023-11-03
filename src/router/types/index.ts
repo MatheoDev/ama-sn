@@ -11,6 +11,7 @@ export type TabType = {
 export type HomeStackType = {
   Home: undefined,
   User: undefined,
+  Setting: undefined,
 }
 
 export type LogSignStackType = {

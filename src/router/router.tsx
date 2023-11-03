@@ -24,6 +24,8 @@ import UserIcon from "../components/Button/UserIcon"
 import User from "../pages/User"
 import TopicFeed from "../pages/TopicFeed"
 import ChatConv from "../pages/ChatConv"
+import SettingIcon from "../components/Button/SettingIcon"
+import Setting from "../pages/Setting"
 
 const Tab = createBottomTabNavigator<TabType>();
 const HomeStack = createNativeStackNavigator<HomeStackType>()
@@ -36,17 +38,30 @@ const ChatStack = createNativeStackNavigator<ChatStackType>()
 const HomeStackScreen = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen 
+      <HomeStack.Screen
         name="Home"
         component={Home}
         options={
           {
             headerRight: () => <UserIcon />,
-            title: 'Ama',
+            title: 'Rozo',
           }
-        } 
+        }
       />
-      <HomeStack.Screen name="User" component={User} />
+      <HomeStack.Screen
+        name="User" component={User}
+        options={
+          {
+            title: 'Profil',
+            headerRight: () => <SettingIcon />,
+          }
+        }
+      />
+      <HomeStack.Screen
+        name="Setting"
+        component={Setting}
+        options={{ title: 'Paramètres' }}
+      />
     </HomeStack.Navigator>
   )
 }
@@ -71,7 +86,7 @@ const LogSignStackScreen = () => {
 const FriendStackScreen = () => {
   return (
     <FriendStack.Navigator>
-      <FriendStack.Screen name="Friend" component={Friend} options={{ title: 'Groupes' }} />
+      <FriendStack.Screen name="Friend" component={Friend} options={{ title: 'Racines' }} />
       <FriendStack.Screen name="TopicFeed" component={TopicFeed} options={{ title: 'Feed' }} />
     </FriendStack.Navigator>
   )
